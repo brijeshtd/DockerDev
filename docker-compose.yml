@@ -68,3 +68,15 @@ services:
       - ./OmAdminApi/appsettings.json:/app/appsettings.json
     ports:
       - '5002:5000'
+
+  omcompany:
+    build: ./OmCompany/
+    container_name: omcompany
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+    depends_on:
+      - db
+    volumes: 
+      - ./OmCompany/appsettings.json:/app/appsettings.json
+    ports:
+      - '5003:5000'
