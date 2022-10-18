@@ -32,7 +32,7 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${CERT_MAIL} -d ${NGINX_DOMAIN}  --agree-tos
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${CERT_MAIL} -d admin.onlinemagic.in -d portal.onlinemagic.in -d user.onlinemagic.in  --agree-tos
 
   # reverseproxy:
       
