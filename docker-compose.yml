@@ -86,6 +86,7 @@ services:
       - db
     volumes: 
       - ./OmAdminApi/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
     ports:
       - '5002:5000'
 
@@ -98,5 +99,18 @@ services:
       - db
     volumes: 
       - ./OmCompany/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
     ports:
       - '5003:5000'
+  omcustomer:
+    build: ./OmCustomer/
+    container_name: omcustomer
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+    depends_on:
+      - db
+    volumes: 
+      - ./OmCustomer/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
+    ports:
+      - '5004:5000'
