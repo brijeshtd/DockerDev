@@ -19,7 +19,7 @@ services:
     build: ./nginx/
     container_name: reverseproxy
     env_file:
-      - domain.env    
+      - ./domain.env    
     ports:
       - "80:80"
       - "443:443"
@@ -32,7 +32,7 @@ services:
     image: certbot/certbot
     container_name: certbot
     env_file:
-      - domain.env
+      - ./domain.env
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
