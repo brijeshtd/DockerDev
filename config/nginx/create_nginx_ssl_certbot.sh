@@ -1,4 +1,4 @@
-DOMAIN_LIST=("admin.onlinemagic.in", "ortal.onlinemagic.in", "user.onlinemagic.in")
+
 echo "
 worker_processes 1;
 events {
