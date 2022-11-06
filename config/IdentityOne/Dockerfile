@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 RUN dotnet tool install --global dotnet-ef
 ARG SSH_PRIVATE_KEY
-RUN  apt-get -yq update && \ 
+RUN apt-get -yq update && \ 
     apt-get -yqq install ssh git  && \
     mkdir /root/.ssh/ && \
     chmod 0700 /root/.ssh && \
@@ -13,7 +13,6 @@ FROM build-env as build-stage
 
 WORKDIR /app
 # Copy everything
-RUN cat root/.ssh/id_rsa
 RUN git clone git@github.com:brijeshtd/IdentityOne.git ./
 # COPY ./IdentityOne ./
 # Restore as distinct layers
