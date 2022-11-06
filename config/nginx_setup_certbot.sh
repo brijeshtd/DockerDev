@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ../domain_env.sh
+source ./domain_env.sh
 
 sudo cp nginx/nginx_before_cert.conf nginx/nginx.conf \ &&
 sudo docker compose up -d reverseproxy \ &&
