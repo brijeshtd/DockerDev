@@ -13,7 +13,7 @@ sudo cp nginx/nginx_after_cert.conf nginx/nginx.conf
 sudo docker compose restart reverseproxy
 
 
-sudo docker compose up -d identityone
+sudo docker compose up -d --env-file ./deploy.env identityone
 sudo docker compose up -d omadminapi
 
 bash integral_migration.sh

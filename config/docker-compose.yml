@@ -64,6 +64,8 @@ services:
   omadmin:
     build:
       context: ./OmAdmin/
+      args:
+        - SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}"
     container_name: omadmin
     depends_on:
       - db
