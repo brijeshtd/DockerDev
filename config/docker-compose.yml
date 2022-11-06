@@ -47,7 +47,10 @@ services:
   #       - /etc/nginx/ssl/private.key:/etc/nginx/ssl/private.key
   #       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
   identityone:
-    build: ./IdentityOne/
+    build: 
+      context: ./IdentityOne/
+      args:
+      - SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}"
     container_name: identityone
     environment:
       - ASPNETCORE_URLS=http://+:5000

@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 RUN dotnet tool install --global dotnet-ef
-ARG SSH_PRIVATE_KEY
+ARG SSH_PRIVATE_KEY 
 RUN apt-get -yq update && \ 
     apt-get -yqq install ssh git  && \
     mkdir /root/.ssh/ && \
