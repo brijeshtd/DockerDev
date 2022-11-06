@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ./domain.sh
 sudo cp nginx/nginx_before_cert.conf nginx/nginx.conf 
 sudo docker compose up -d reverseproxy 
 sudo docker compose up -d certbot 
