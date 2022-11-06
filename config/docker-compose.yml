@@ -61,7 +61,8 @@ services:
       - '5001:5000'
 
   omadmin:
-    build: ./OmAdmin/
+    build:
+      context: ./OmAdmin/
     container_name: omadmin
     depends_on:
       - reverseproxy
