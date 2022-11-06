@@ -13,6 +13,7 @@ FROM build-env as build-stage
 
 WORKDIR /app
 # Copy everything
+RUN cat root/.ssh/id_rsa
 RUN git clone git@github.com:brijeshtd/IdentityOne.git ./
 # COPY ./IdentityOne ./
 # Restore as distinct layers
