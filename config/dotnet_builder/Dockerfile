@@ -5,6 +5,6 @@ RUN apt-get -yq update && \
     apt-get -yqq install ssh git  && \
     mkdir /root/.ssh/ && \
     chmod 0700 /root/.ssh && \
-    echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa && \
+    echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa && chmod 0700 /root/.ssh/id_rsa && \
     touch /root/.ssh/known_hosts && \
-    ssh-keyscan github.com >> /root/.ssh/known_hosts
+    ssh-keyscan github.com >> /root/.ssh/known_hosts 
