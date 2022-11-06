@@ -1,4 +1,3 @@
-source ../domain_env.sh
 
 echo "
 worker_processes 1;
