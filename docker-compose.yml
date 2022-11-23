@@ -114,3 +114,16 @@ services:
       - ./Keys/public-key.pem:/app/public-key.pem
     ports:
       - '5004:5000'
+
+  omonboard:
+    build: ./OmOnboard/
+    container_name: omonboard
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+    depends_on:
+      - db
+    volumes: 
+      - ./OmOnboard/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
+    ports:
+      - '5005:5000'
