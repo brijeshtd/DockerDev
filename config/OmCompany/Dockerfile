@@ -11,23 +11,19 @@ RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
 FROM build-env as release-env
 
-WORKDIR /app
 # Copy everything
-RUN git clone git@github.com:brijeshtd/IdentityOne.git ./
+RUN git clone git@github.com:brijeshtd/OmCompany.git ./
 # COPY ./IdentityOne ./
 # Restore as distinct layers
 RUN dotnet restore
 # Build and publish a release
 RUN dotnet publish -c Release -o out
-ENV PATH $PATH:/root/.dotnet/tools
-RUN dotnet-ef migrations script -o out/db.sql
-# WORKDIR /app/IdentityOne
-# RUN cp ./private-key.pem ./out/
-# RUN cp ./public-key.pem ./out/
 
+# WORKDIR /app/OmAdmin
+# RUN cp ./public-key.pem ./out/
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=release-env /app/out .
-ENTRYPOINT ["dotnet", "IdentityOne.dll"]
+ENTRYPOINT ["dotnet", "OmCompany.dll"]

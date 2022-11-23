@@ -1,1 +1,0 @@
-export SSH_PRIVATE_KEY=$(cat /root/.ssh/id_ed25519)

@@ -49,11 +49,12 @@ services:
   identityone:
     build: 
       context: ./IdentityOne/
-      args:
-      - SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}"
     container_name: identityone
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      # - "ConnectionStrings:EfConn=\"Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;\""
+      # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""      
+       
     depends_on:
       - db
     volumes: 
@@ -67,15 +68,18 @@ services:
   omadmin:
     build:
       context: ./OmAdmin/
-      args:
-        - SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}"
     container_name: omadmin
+    
     depends_on:
       - db
-
+    # env_file:
+    #   - ./OmAdmin/.env
     environment:
       - ASPNETCORE_URLS=http://+:5000
-    
+      # - "ConnectionStrings:EfConn=\"Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;\""
+      # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""
+      # - "ApiUrls:Identity=http://identityone:5000"
+      # - "ApiUrls:Admin=http://omadminapi:5000"
     volumes: 
       - ./OmAdmin/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
@@ -84,7 +88,8 @@ services:
       - '5000:5000'
 
   omadminapi:
-    build: ./OmAdminApi/
+    build:
+      context: ./OmAdminApi/
     container_name: omadminapi
     environment:
       - ASPNETCORE_URLS=http://+:5000
@@ -97,7 +102,8 @@ services:
       - '5002:5000'
 
   omcompany:
-    build: ./OmCompany/
+    build:
+      context: ./OmCompany/
     container_name: omcompany
     environment:
       - ASPNETCORE_URLS=http://+:5000
@@ -109,7 +115,8 @@ services:
     ports:
       - '5003:5000'
   omcustomer:
-    build: ./OmCustomer/
+    build:
+      context: ./OmCustomer/
     container_name: omcustomer
     environment:
       - ASPNETCORE_URLS=http://+:5000
