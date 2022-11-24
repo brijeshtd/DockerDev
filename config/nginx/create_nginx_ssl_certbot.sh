@@ -32,7 +32,7 @@ http {
 
     
     " > ./nginx_created_cert.conf
-for i in 0 1 2 
+for i in 0 1 2 3
 do 
 
     echo "
