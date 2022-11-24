@@ -1,6 +1,8 @@
 *Keys/
 *appsettings.json
 */git/
+*.pem
+*.cert
 config/certbot/conf/live/tstadmin.onlinemagic.in/cert.pem
 config/certbot/conf/live/tstadmin.onlinemagic.in/chain.pem
 config/certbot/conf/live/tstadmin.onlinemagic.in/fullchain.pem
