@@ -21,6 +21,7 @@ RUN dotnet restore
 RUN dotnet publish -c Release -o out
 ENV PATH $PATH:/root/.dotnet/tools
 RUN dotnet-ef migrations script -o out/db.sql
+RUN dotnet ef database update
 # WORKDIR /app/IdentityOne
 # RUN cp ./private-key.pem ./out/
 # RUN cp ./public-key.pem ./out/
