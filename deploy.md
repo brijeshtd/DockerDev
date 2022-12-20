@@ -3,7 +3,7 @@
 edit ssh key path and run below
 bash copy_key.sh
 
-sudo docker compose up omadmin -d
+sudo docker compose restart omadmin 
 
  nginx
 sudo cp nginx/nginx_before_cert.conf nginx/nginx.conf
@@ -13,12 +13,15 @@ sudo cp nginx/nginx_after_cert.conf nginx/nginx.conf
 sudo docker compose restart reverseproxy
 
 
-sudo docker compose up -d identityone
-sudo docker compose up -d omadminapi
+sudo docker compose \
+            --env-file ./deploy.env \
+            --env-file ./domain.env \
+            up -d  identityone
+sudo docker compose --env-file ./deploy.env up -d omadminapi
 
 bash integral_migration.sh
 
-sudo docker compose up -d omadmin 
+sudo docker compose --env-file ./deploy.env up -d omadmin 
 sudo docker compose up -d omcompany
 sudo docker compose up -d omcustomer
 

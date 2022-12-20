@@ -1,3 +1,17 @@
 *Keys/
 *appsettings.json
 */git/
+*.pem
+*.cert
+*.sql
+config/certbot/conf/live/tstadmin.onlinemagic.in/cert.pem
+config/certbot/conf/live/tstadmin.onlinemagic.in/chain.pem
+config/certbot/conf/live/tstadmin.onlinemagic.in/fullchain.pem
+config/certbot/conf/live/tstadmin.onlinemagic.in/privkey.pem
+config/OmOnboard/id_rsa_git
+config/certbot/conf/archive/tstadmin.onlinemagic.in/cert7.pem
+config/certbot/conf/archive/tstadmin.onlinemagic.in/chain7.pem
+config/certbot/conf/archive/tstadmin.onlinemagic.in/fullchain7.pem
+config/certbot/conf/archive/tstadmin.onlinemagic.in/privkey7.pem
+config/certbot/conf/csr/0012_csr-certbot.pem
+config/certbot/conf/keys/0012_key-certbot.pem
