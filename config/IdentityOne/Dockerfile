@@ -15,7 +15,8 @@ WORKDIR /app
 # Copy everything
 
 RUN git clone git@github.com:brijeshtd/IdentityOne.git ./
-COPY ./IdentityOne/appsettings.json ./IdentityOne/
+COPY appsettings.json .
+RUN cat appsettings.json
 # COPY ./IdentityOne ./
 # Restore as distinct layers
 RUN dotnet restore
@@ -24,6 +25,7 @@ RUN dotnet publish -c Release -o out
 ENV PATH $PATH:/root/.dotnet/tools
 #ENV "ConnectionStrings:EfConn" "Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;"
 #RUN dotnet-ef migrations script -o out/db.sql
+RUN ls
 RUN dotnet-ef database update
 # WORKDIR /app/IdentityOne
 # RUN cp ./private-key.pem ./out/
