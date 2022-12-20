@@ -13,15 +13,18 @@ FROM build-env as release-env
 
 WORKDIR /app
 # Copy everything
+
 RUN git clone git@github.com:brijeshtd/IdentityOne.git ./
+COPY ./IdentityOne/appsettings.json ./IdentityOne/
 # COPY ./IdentityOne ./
 # Restore as distinct layers
 RUN dotnet restore
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 ENV PATH $PATH:/root/.dotnet/tools
-RUN dotnet-ef migrations script -o out/db.sql
-RUN dotnet ef database update
+#ENV "ConnectionStrings:EfConn" "Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;"
+#RUN dotnet-ef migrations script -o out/db.sql
+RUN dotnet-ef database update
 # WORKDIR /app/IdentityOne
 # RUN cp ./private-key.pem ./out/
 # RUN cp ./public-key.pem ./out/
