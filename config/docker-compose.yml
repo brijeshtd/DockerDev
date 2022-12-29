@@ -143,6 +143,7 @@ services:
   omcarepackapi:
     build: ./OmCarePackApi/
     container_name: omcarepackapi
+    command: ["dotnet","OmCarePackApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmCarePackApi.dll
@@ -151,5 +152,56 @@ services:
     volumes: 
       - ./OmCarePackApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
-    ports:
-      - '5005:5000'
+
+  whatsappone:
+    build: ./WhatsAppOne/
+    container_name: whatsappone
+    command: ["dotnet","WhatsAppOne.dll"]
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=WhatsAppOne.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./WhatsAppOne/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
+
+  ominventoryapi:
+    build: ./OmInventoryApi/
+    container_name: ominventoryapi
+    command: ["dotnet","OmInventoryApi.dll"]    
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmInventoryApi.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./OmInventoryApi/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
+
+  omproductapi:
+    build: ./OmProductApi/
+    container_name: omproductapi
+    command: ["dotnet","OmProductApi.dll"]  
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmProductApi.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./OmProductApi/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
+
+  omcustomerapi:
+    build: ./OmCustomerApi/
+    container_name: omcustomerapi
+    command: ["dotnet","OmCustomerApi.dll"]      
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmCustomerApi.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./OmCustomerApi/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
+  
