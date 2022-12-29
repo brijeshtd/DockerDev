@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0
+RUN dotnet tool install --global dotnet-ef
+WORKDIR /app
+
+RUN  apt-get -yq update && apt-get -yqq install ssh && mkdir /root/.ssh/ && chmod 0700 /root/.ssh
+COPY ./id_rsa_git /root/.ssh/id_ed25519
+RUN chmod 0700 /root/.ssh/id_ed25519
+RUN touch /root/.ssh/known_hosts
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+
