@@ -1,6 +1,7 @@
 config/certbot/conf/
 config/nginx/nginx.conf
 config/nginx/nginx_created_cert.conf
+*id_rsa_git
 *Keys/
 *appsettings.json
 */git/
