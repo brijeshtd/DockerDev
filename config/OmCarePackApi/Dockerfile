@@ -18,7 +18,7 @@ RUN dotnet restore
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 ENV PATH $PATH:/root/.dotnet/tools
-RUN dotnet-ef migrations script -o out/db.sql
+#RUN dotnet-ef migrations script -o out/db.sql
 #RUN dotnet-ef database update
 
 # Build runtime image
