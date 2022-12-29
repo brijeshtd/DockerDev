@@ -50,8 +50,10 @@ services:
     build: 
       context: ./IdentityOne/
     container_name: identityone
+    command: ["dotnet","identityone.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=identityone.dll      
       # - "ConnectionStrings:EfConn=\"Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;\""
       # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""      
        
@@ -62,20 +64,18 @@ services:
       - ./Keys/private-key.pem:/app/private-key.pem
       - ./Keys/public-key.pem:/app/public-key.pem
 
-    ports:
-      - '5001:5000'
-
   omadmin:
     build:
       context: ./OmAdmin/
     container_name: omadmin
-    
+    command: ["dotnet","OmAdmin.dll"]      
     depends_on:
       - db
     # env_file:
     #   - ./OmAdmin/.env
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmAdmin.dll      
       # - "ConnectionStrings:EfConn=\"Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;\""
       # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""
       # - "ApiUrls:Identity=http://identityone:5000"
@@ -84,61 +84,62 @@ services:
       - ./OmAdmin/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
-    ports:
-      - '5000:5000'
-
   omadminapi:
     build:
       context: ./OmAdminApi/
     container_name: omadminapi
+    command: ["dotnet","OmAdminApi.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmAdminApi.dll      
     depends_on:
       - db
     volumes: 
       - ./OmAdminApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
-    ports:
-      - '5002:5000'
+
 
   omcompany:
     build:
       context: ./OmCompany/
     container_name: omcompany
+    command: ["dotnet","OmCompany.dll"]       
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmCompany.dll      
     depends_on:
       - db
     volumes: 
       - ./OmCompany/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
-    ports:
-      - '5003:5000'
+
   omcustomer:
     build:
       context: ./OmCustomer/
     container_name: omcustomer
+    command: ["dotnet","OmCustomer.dll"]    
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmCustomer.dll      
     depends_on:
       - db
     volumes: 
       - ./OmCustomer/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
-    ports:
-      - '5004:5000'
+
   omonboard:
     build: ./OmOnboard/
     container_name: omonboard
+    command: ["dotnet","OmOnboard.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmOnboard.dll
     depends_on:
       - db
     volumes: 
       - ./OmOnboard/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
-    ports:
-      - '5005:5000'
+
 
   omcarepackapi:
     build: ./OmCarePackApi/
