@@ -11,7 +11,7 @@
 
 FROM dotnet-sdk-build-env:6.0 as release-env
 # Copy everything
-RUN git clone git@github.com:brijeshtd/OmAdminApi.git ./
+RUN git clone git@github.com:brijeshtd/OmCarePackApi.git ./
 # COPY ./IdentityOne ./
 # Restore as distinct layers
 RUN dotnet restore
