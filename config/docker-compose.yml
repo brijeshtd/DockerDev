@@ -13,6 +13,7 @@ services:
       - '5432:5432'
     volumes: 
       - /pgdata/:/var/lib/postgresql/data
+      # - ./db-seed-files/:/etc/docker-entrypoint-initdb.d      
 
 
   reverseproxy:
