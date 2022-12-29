@@ -10,7 +10,7 @@
 
 # FROM build-env as release-env
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
+FROM dotnet-sdk-build-env:6.0 as release-env
 
 WORKDIR /app
 # Copy everything
