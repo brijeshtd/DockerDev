@@ -28,3 +28,4 @@ docker compose \
 
 bash integral_migration.sh
 
+docker ps --format "{{.Names}} \t  {{.Status}} \t {{.Ports}}"
