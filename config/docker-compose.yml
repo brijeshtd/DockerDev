@@ -145,6 +145,7 @@ services:
     container_name: omcarepackapi
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmCarePackApi.dll
     depends_on:
       - db
     volumes: 
