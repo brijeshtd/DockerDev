@@ -1,5 +1,5 @@
 
-## Step to follow for updating the applications
+## 1. Step to follow for updating the applications
 
 ##### copy github key to the build container
 
@@ -53,3 +53,44 @@ This container will be ready to pull the repository from github
 ### restart the reverse proxy(nginx)
 
     sudo docker compose restart reverseproxy
+
+
+## 2. Adding New service
+    
+  a) update docker-compose.
+  b) create directory and Dockerfile,appsettings,etc..
+  
+## a) example service part
+
+
+          omadminapi:
+            build:
+              context: ./OmAdminApi/
+            container_name: omadminapi
+            command: ["dotnet","OmAdminApi.dll"]      
+            environment:
+              - ASPNETCORE_URLS=http://+:5000
+              - RUNNER=OmAdminApi.dll      
+            depends_on:
+              - db
+            volumes: 
+              - ./OmAdminApi/appsettings.json:/app/appsettings.json
+              - ./Keys/public-key.pem:/app/public-key.pem
+  
+ ## b) create the service folder which hold appsettings and other relevent file of the service.
+        
+        ## create folder
+        
+        mkdir OmAdminApi
+        
+        ## copy Dockerfile/ create Dockerfile
+        
+        cp <from_dir>  OmAdminApi/
+        
+        ## create appsettings
+        
+        vim appsettings.json
+        
+     
+   
+    
