@@ -1,5 +1,5 @@
 
-## 1. Step to follow for updating the applications
+# 1. Step to follow for updating the applications
 
 ##### copy github key to the build container
 
@@ -55,12 +55,13 @@ This container will be ready to pull the repository from github
     sudo docker compose restart reverseproxy
 
 
-## 2. Adding New service
+# 2. Adding New service
     
-  a) update docker-compose.
+  a) update docker-compose service.
+  
   b) create directory and Dockerfile,appsettings,etc..
   
-## a) example service part
+## a) example docker compose service part
 
 
           omadminapi:
