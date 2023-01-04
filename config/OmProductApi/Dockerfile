@@ -26,4 +26,3 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 ENV RUNNER runner.dll
 COPY --from=release-env /app/out .
-ENTRYPOINT ["dotnet", "${RUNNER}"]
