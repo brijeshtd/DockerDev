@@ -211,4 +211,17 @@ services:
     volumes: 
       - ./OmCustomerApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
+
+  omemailapi:
+    build: ./OmEmailApi/
+    container_name: omemailapi
+    command: ["dotnet","OmEmailApi.dll"]      
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmEmailApi.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./OmEmailApi/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
   
