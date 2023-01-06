@@ -224,4 +224,17 @@ services:
     volumes: 
       - ./OmEmailApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
+
+  omnotificationapi:
+    build: ./OmNotificationApi/
+    container_name: omnotificationapi
+    command: ["dotnet","OmNotificationApi.dll"]  
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmNotificationApi.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./OmNotificationApi/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
   
