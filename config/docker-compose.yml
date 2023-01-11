@@ -263,4 +263,17 @@ services:
     volumes: 
       - ./OmWhatsappApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
+
+  omserviceapi:
+    build: ./OmServiceApi/
+    container_name: omserviceapi
+    command: ["dotnet","OmServiceApi.dll"]      
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmServiceApi.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./OmServiceApi/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
   
