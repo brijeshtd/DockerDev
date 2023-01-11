@@ -1,0 +1,16 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "EfConn": "Server=XXX;Port=5432;Database=om;User Id=XX;Password=XX;"
+  },
+  "DapperConn": {
+    "PgSql": "User ID=XX;Password=XX;Host=ompgsqlone;Port=5432;Database=om;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300"
+  },
+  "ApiKeys": { "Notification": "XXXXXX" }
+}

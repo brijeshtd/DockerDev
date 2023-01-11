@@ -237,4 +237,30 @@ services:
     volumes: 
       - ./OmNotificationApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
+
+  omwhatsappwebhook:
+    build: ./OmWhatsappWebhook/
+    container_name: omwhatsappwebhook
+    command: ["dotnet","OmWhatsappWebhook.dll"]  
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmWhatsappWebhook.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./OmWhatsappWebhook/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
+
+  omwhatsappapi:
+    build: ./OmWhatsappApi/
+    container_name: omwhatsappapi
+    command: ["dotnet","OmWhatsappApi.dll"]      
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmWhatsappApi.dll
+    depends_on:
+      - db
+    volumes: 
+      - ./OmWhatsappApi/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
   
