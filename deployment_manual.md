@@ -1,39 +1,49 @@
 
-# 1. Step to follow for updating the applications
+# 1. Step up the setting  base images 
 
-##### copy github key to the build container
+    ## collect the base images
 
-    bash copy_key.sh
+      bash collect_base_images.sh
 
-##### create build container image
-This container will be ready to pull the repository from github
+    ## ssh key genration for github 
+
+      mkdir -p Keys/git
+      
+      ssh-keygen -t ed25519 -C "your_email@example.com" -f ./Keys/git/id_rsa_git -N -P
+
+      cat ./Keys/git/id_rsa_git.pub
+
+    ## add this key to github
+
+      https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
+
+    ## copy github key to the build container
+
+      bash copy_key.sh
+
+    ## create build container image
+
+      This container will be ready to pull the repository from github
                 
-    bash setup_build_image.sh
+        bash setup_build_image.sh
 
-####  Rebuild applications from github 
 
-    docker compose build --no-cache \
-                    ominventoryapi \
-                    omproductapi \
-                    omcustomerapi \
-                    whatsappone \
-                    omcarepackapi \
-                    omadmin \
-                    omcompany \
-                    omonboard \
-                    omcustomer \
-                    omadminapi \
-                    identityone 
+# 2. Build images of each services ready to deploy using any of the following codes
 
-  or 
 
-    docker compose build --no-cache
+        docker compose build --no-cache
 
-  We can build each application one by one specifying thier name
+      We can build each application one by one specifying thier name
      
-    docker compose build --no-cache <name>
+        docker compose build --no-cache <name>
+
+        docker compose build --no-cache ominventoryapi 
     
-    
+# 3. create certbot ssl
+
+       bash nginx_setup_certbot.sh
+
+
 ### start application 
 
     docker compose --env-file ./deploy.env --env-file ./domain.env up -d 

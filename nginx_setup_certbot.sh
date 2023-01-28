@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo cp ./nginx/nginx_before_cert.conf ./nginx/nginx.conf 
 sudo docker compose --env-file ./domain.env up  -d reverseproxy 
-sleep 2
+sleep 3
 sudo docker compose --env-file ./domain.env  up  certbot && \
 
 # create nginx.conf after succesfull certbot ssl creation

@@ -37,28 +37,18 @@ services:
       - ./certbot/www:/var/www/certbot
     command: certonly --webroot -w /var/www/certbot --force-renewal --email "${CERT_MAIL}"  ${DOMAIN}  --agree-tos
 
-  # reverseproxy:
-      
-  #     build: ./nginx/
-  #     container_name: reverseproxy
-  #     ports:
-  #       - "80:80"
-  #       - "443:443"
-  #     volumes:
-  #       - /etc/nginx/ssl/certificate.crt:/etc/nginx/ssl/certificate.crt
-  #       - /etc/nginx/ssl/private.key:/etc/nginx/ssl/private.key
-  #       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
   identityone:
     build: 
       context: ./IdentityOne/
+      args:
+        - repository=brijeshtd/IdentityOne.git
+        - branch=main      
     container_name: identityone
     command: ["dotnet","identityone.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=identityone.dll      
-      # - "ConnectionStrings:EfConn=\"Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;\""
-      # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""      
-       
     depends_on:
       - db
     volumes: 
@@ -69,19 +59,16 @@ services:
   omadmin:
     build:
       context: ./OmAdmin/
+      args:
+        - repository=brijeshtd/OmAdmin.git
+        - branch=main
+
     container_name: omadmin
     command: ["dotnet","OmAdmin.dll"]      
     depends_on:
       - db
-    # env_file:
-    #   - ./OmAdmin/.env
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmAdmin.dll      
-      # - "ConnectionStrings:EfConn=\"Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;\""
-      # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""
-      # - "ApiUrls:Identity=http://identityone:5000"
-      # - "ApiUrls:Admin=http://omadminapi:5000"
     volumes: 
       - ./OmAdmin/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
@@ -90,6 +77,9 @@ services:
   omadminapi:
     build:
       context: ./OmAdminApi/
+      args:
+        - repository=brijeshtd/OmAdminApi.git
+        - branch=main      
     container_name: omadminapi
     command: ["dotnet","OmAdminApi.dll"]      
     environment:

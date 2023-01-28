@@ -9,7 +9,3 @@ for image in   nginx \
 do 
 docker pull $image
 done
-cd dotnet_builder/
-SSH_PRIVATE_KEY=`cat ./id_rsa`
-docker build -t mcr.microsoft.com-dotnet-sdk:6.0 --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" .
-cd ..
