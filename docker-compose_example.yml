@@ -60,7 +60,7 @@ services:
 
   omadmin:
     build:
-      context: ./OmAdmin/
+      context: ./Deployer/
       args:
         - repository=brijeshtd/OmAdmin.git
         - branch=master
@@ -79,7 +79,7 @@ services:
 
   omadminapi:
     build:
-      context: ./OmAdminApi/
+      context: ./Deployer/
       args:
         - repository=brijeshtd/OmAdminApi.git
         - branch=master      
