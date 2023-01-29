@@ -11,3 +11,12 @@
         mkdir -p ./settings/$f/
         cp /root/testenv/DockerDev/config/$f/appsettings.json ./settings/$f/
         done 
+
+
+### clean docker images
+
+
+for ima in $(sudo docker images -a | grep none | awk '{ print $3; }')
+do
+sudo docker image rm $ima
+done
