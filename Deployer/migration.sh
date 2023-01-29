@@ -1,0 +1,1 @@
+if [[ "${dbmigration}" == "1" ]] ;then dotnet-ef migrations script -o out/db.sql ; fi

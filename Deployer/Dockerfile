@@ -6,12 +6,14 @@ WORKDIR /app
 ARG repository=brijeshtd/IdentityOne.git
 ARG branch=main
 ARG dbmigration=0
+COPY migration.sh .
 RUN git clone --single-branch --branch ${branch} git@github.com:${repository} ./
 
 RUN dotnet restore
 RUN dotnet publish -c Release -o out
 ENV PATH $PATH:/root/.dotnet/tools
-RUN if [[ ${dbmigration} == 1 ]] ;then dotnet-ef migrations script -o out/db.sql ; fi
+RUN bash ./migration.sh
+
 
 
 # Build runtime image
