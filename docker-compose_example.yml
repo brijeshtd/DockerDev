@@ -40,12 +40,14 @@ services:
 
   identityone:
     build: 
-      context: ./IdentityOne/
+      context: ./Deployer/
       args:
         - repository=brijeshtd/IdentityOne.git
-        - branch=main      
+        - branch=main
+        - dbmigration=1
+        - DLL_RUNNER=IdentityOne.dll      
     container_name: identityone
-    command: ["dotnet","identityone.dll"]      
+    # command: ["dotnet","identityone.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=identityone.dll      
@@ -62,9 +64,10 @@ services:
       args:
         - repository=brijeshtd/OmAdmin.git
         - branch=main
-
+        - dbmigration=0
+        - DLL_RUNNER=OmAdmin.dll 
     container_name: omadmin
-    command: ["dotnet","OmAdmin.dll"]      
+    # command: ["dotnet","OmAdmin.dll"]      
     depends_on:
       - db
     environment:
@@ -80,8 +83,10 @@ services:
       args:
         - repository=brijeshtd/OmAdminApi.git
         - branch=main      
+        - dbmigration=1
+        - DLL_RUNNER=OmAdminApi.dll         
     container_name: omadminapi
-    command: ["dotnet","OmAdminApi.dll"]      
+    #command: ["dotnet","OmAdminApi.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmAdminApi.dll      
