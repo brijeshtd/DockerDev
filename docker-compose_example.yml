@@ -14,6 +14,17 @@ services:
     volumes: 
       - /pgdata/:/var/lib/postgresql/data
       # - ./db-seed-files/:/etc/docker-entrypoint-initdb.d      
+  rqueue:
+
+    image: rabbitmq:3.11-management
+    container_name: rqueue
+
+    environment:
+      - RABBITMQ_DEFAULT_USER=magicQ
+      - RABBITMQ_DEFAULT_PASS=onlineQfortesting2022
+    ports:
+      - 15672:15672
+      - 5672:5672
 
 
   reverseproxy:
@@ -54,8 +65,8 @@ services:
       - db
     volumes: 
       - ./IdentityOne/appsettings.json:/app/appsettings.json
-      - ./Keys/private-key.pem:/app/private-key.pem
-      - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Deployer/private-key.pem:/app/private-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   omadmin:
     build:
@@ -72,7 +83,7 @@ services:
       - ASPNETCORE_URLS=http://+:5000
     volumes: 
       - ./OmAdmin/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
 
   omadminapi:
@@ -91,9 +102,7 @@ services:
       - db
     volumes: 
       - ./OmAdminApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
-
-
+ #     - ./Keys/public-key.pem:/app/public-key.pem
   omcompany:
     build:
       context: ./Deployer/
@@ -109,7 +118,7 @@ services:
       - db
     volumes: 
       - ./OmCompany/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
 
   omcustomer:
@@ -127,7 +136,7 @@ services:
       - db
     volumes: 
       - ./OmCustomer/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
 
   omonboard:
@@ -145,137 +154,161 @@ services:
       - db
     volumes: 
       - ./OmOnboard/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
 
-
   omcarepackapi:
-    build: ./OmCarePackApi/
-    container_name: omcarepackapi
-    command: ["dotnet","OmCarePackApi.dll"]
-    environment:
-      - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmCarePackApi.dll
-    depends_on:
-      - db
-    volumes: 
-      - ./OmCarePackApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+    build:
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmCarePackApi.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmCarePackApi.dll
 
-  whatsappone:
-    build: ./WhatsAppOne/
-    container_name: whatsappone
-    command: ["dotnet","WhatsAppOne.dll"]
+    container_name: omcarepackapi
+    # command: ["dotnet","OmCarePackApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=WhatsAppOne.dll
     depends_on:
       - db
-    volumes: 
-      - ./WhatsAppOne/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+    volumes:
+      - ./OmCarePackApi/appsettings.json:/app/appsettings.json
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   ominventoryapi:
-    build: ./OmInventoryApi/
+    build:
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmInventoryApi.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmInventoryApi.dll  
     container_name: ominventoryapi
-    command: ["dotnet","OmInventoryApi.dll"]    
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmInventoryApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmInventoryApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   omproductapi:
-    build: ./OmProductApi/
+    build:
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmProductApi.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmProductApi.dll  
     container_name: omproductapi
-    command: ["dotnet","OmProductApi.dll"]  
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmProductApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmProductApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   omcustomerapi:
-    build: ./OmCustomerApi/
+    build: 
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmCustomerApi.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmCustomerApi.dll  
     container_name: omcustomerapi
-    command: ["dotnet","OmCustomerApi.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmCustomerApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmCustomerApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   omemailapi:
-    build: ./OmEmailApi/
+    build: 
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmEmailApi.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmEmailApi.dll  
     container_name: omemailapi
-    command: ["dotnet","OmEmailApi.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmEmailApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmEmailApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   omnotificationapi:
-    build: ./OmNotificationApi/
+    build: 
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmNotificationApi.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmNotificationApi.dll  
     container_name: omnotificationapi
-    command: ["dotnet","OmNotificationApi.dll"]  
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmNotificationApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmNotificationApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   omwhatsappwebhook:
-    build: ./OmWhatsappWebhook/
+    build: 
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmWhatsappWebhook.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmWhatsappWebhook.dll  
     container_name: omwhatsappwebhook
-    command: ["dotnet","OmWhatsappWebhook.dll"]  
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmWhatsappWebhook.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmWhatsappWebhook/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   omwhatsappapi:
-    build: ./OmWhatsappApi/
+    build: 
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmWhatsappApi.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmWhatsappApi.dll  
     container_name: omwhatsappapi
-    command: ["dotnet","OmWhatsappApi.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmWhatsappApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmWhatsappApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
+ #     - ./Keys/public-key.pem:/app/public-key.pem
 
   omserviceapi:
-    build: ./OmServiceApi/
+    build: 
+      context: ./Deployer/
+      args:
+      - repository=brijeshtd/OmServiceApi.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmServiceApi.dll  
     container_name: omserviceapi
-    command: ["dotnet","OmServiceApi.dll"]      
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmServiceApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmServiceApi/appsettings.json:/app/appsettings.json
-      - ./Keys/public-key.pem:/app/public-key.pem
-  
+ #     - ./Keys/public-key.pem:/app/public-key.pem
