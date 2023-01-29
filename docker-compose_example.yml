@@ -97,13 +97,14 @@ services:
   omcompany:
     build:
       context: ./Deployer/
+      args:
+        - repository=brijeshtd/OmCompany.git
+        - branch=master
+        - dbmigration=0
+        - DLL_RUNNER=OmCompany.dll       
     container_name: omcompany      
     environment:
-      - ASPNETCORE_URLS=http://+:5000
-      - repository=brijeshtd/OmCompany.git
-      - branch=master
-      - dbmigration=0
-      - DLL_RUNNER=OmCompany.dll                
+      - ASPNETCORE_URLS=http://+:5000           
     depends_on:
       - db
     volumes: 
@@ -114,13 +115,14 @@ services:
   omcustomer:
     build:
       context: ./Deployer/
+      args:
+        - repository=brijeshtd/OmCustomer.git
+        - branch=master
+        - dbmigration=0
+        - DLL_RUNNER=OmCustomer.dll            
     container_name: omcustomer 
     environment:
-      - ASPNETCORE_URLS=http://+:5000
-      - repository=brijeshtd/OmCustomer.git
-      - branch=master
-      - dbmigration=0
-      - DLL_RUNNER=OmCustomer.dll               
+      - ASPNETCORE_URLS=http://+:5000             
     depends_on:
       - db
     volumes: 
@@ -129,15 +131,16 @@ services:
       - ./static_volume:/app/wwwroot/static
 
   omonboard:
-    build: ./Deployer/
-    container_name: omonboard
-    environment:
-      - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmOnboard.dll
+    build:
+      context: ./Deployer/
+      args:
       - repository=brijeshtd/OmOnboard.git
       - branch=master
       - dbmigration=0
-      - DLL_RUNNER=OmOnboard.dll   
+      - DLL_RUNNER=OmOnboard.dll  
+    container_name: omonboard
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
     depends_on:
       - db
     volumes: 
