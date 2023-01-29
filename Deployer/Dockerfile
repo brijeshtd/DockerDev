@@ -6,13 +6,13 @@ WORKDIR /app
 ARG repository=brijeshtd/IdentityOne.git
 ARG branch=main
 ARG dbmigration=0
-COPY migration.sh .
-RUN git clone --single-branch --branch ${branch} git@github.com:${repository} ./
+COPY migration.sh /migration.sh
+RUN rm -rf ./${repository} && git clone --single-branch --branch ${branch} git@github.com:${repository} ./
 
 RUN dotnet restore
 RUN dotnet publish -c Release -o out
 ENV PATH $PATH:/root/.dotnet/tools
-RUN bash ./migration.sh
+RUN bash /migration.sh
 
 
 
