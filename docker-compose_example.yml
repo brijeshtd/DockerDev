@@ -43,7 +43,7 @@ services:
       context: ./Deployer/
       args:
         - repository=brijeshtd/IdentityOne.git
-        - branch=main
+        - branch=master
         - dbmigration=1
         - DLL_RUNNER=IdentityOne.dll      
     container_name: identityone
@@ -63,7 +63,7 @@ services:
       context: ./OmAdmin/
       args:
         - repository=brijeshtd/OmAdmin.git
-        - branch=main
+        - branch=master
         - dbmigration=0
         - DLL_RUNNER=OmAdmin.dll 
     container_name: omadmin
@@ -82,7 +82,7 @@ services:
       context: ./OmAdminApi/
       args:
         - repository=brijeshtd/OmAdminApi.git
-        - branch=main      
+        - branch=master      
         - dbmigration=1
         - DLL_RUNNER=OmAdminApi.dll         
     container_name: omadminapi
