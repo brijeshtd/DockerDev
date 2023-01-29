@@ -46,8 +46,7 @@ services:
         - branch=master
         - dbmigration=1
         - DLL_RUNNER=IdentityOne.dll      
-    container_name: identityone
-    # command: ["dotnet","identityone.dll"]      
+    container_name: identityone    
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=identityone.dll      
@@ -66,8 +65,7 @@ services:
         - branch=master
         - dbmigration=0
         - DLL_RUNNER=OmAdmin.dll 
-    container_name: omadmin
-    # command: ["dotnet","OmAdmin.dll"]      
+    container_name: omadmin    
     depends_on:
       - db
     environment:
@@ -85,8 +83,7 @@ services:
         - branch=master      
         - dbmigration=1
         - DLL_RUNNER=OmAdminApi.dll         
-    container_name: omadminapi
-    #command: ["dotnet","OmAdminApi.dll"]      
+    container_name: omadminapi   
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmAdminApi.dll      
@@ -99,12 +96,14 @@ services:
 
   omcompany:
     build:
-      context: ./OmCompany/
-    container_name: omcompany
-    command: ["dotnet","OmCompany.dll"]       
+      context: ./Deployer/
+    container_name: omcompany      
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmCompany.dll      
+      - repository=brijeshtd/OmCompany.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmCompany.dll                
     depends_on:
       - db
     volumes: 
@@ -114,12 +113,14 @@ services:
 
   omcustomer:
     build:
-      context: ./OmCustomer/
-    container_name: omcustomer
-    command: ["dotnet","OmCustomer.dll"]    
+      context: ./Deployer/
+    container_name: omcustomer 
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmCustomer.dll      
+      - repository=brijeshtd/OmCustomer.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmCustomer.dll               
     depends_on:
       - db
     volumes: 
@@ -128,12 +129,15 @@ services:
       - ./static_volume:/app/wwwroot/static
 
   omonboard:
-    build: ./OmOnboard/
+    build: ./Deployer/
     container_name: omonboard
-    command: ["dotnet","OmOnboard.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmOnboard.dll
+      - repository=brijeshtd/OmOnboard.git
+      - branch=master
+      - dbmigration=0
+      - DLL_RUNNER=OmOnboard.dll   
     depends_on:
       - db
     volumes: 
