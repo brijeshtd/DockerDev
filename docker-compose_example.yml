@@ -64,8 +64,8 @@ services:
       - db
     volumes: 
       - ./IdentityOne/appsettings.json:/app/appsettings.json
-      - ./Deployer/private-key.pem:/app/private-key.pem
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/private-key.pem:/app/private-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   omadmin:
     build:
@@ -82,7 +82,7 @@ services:
       - ASPNETCORE_URLS=http://+:5000
     volumes: 
       - ./OmAdmin/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
 
   omadminapi:
@@ -101,7 +101,7 @@ services:
       - db
     volumes: 
       - ./OmAdminApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
   omcompany:
     build:
       context: ./Deployer/
@@ -117,7 +117,7 @@ services:
       - db
     volumes: 
       - ./OmCompany/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
 
   omcustomer:
@@ -135,7 +135,7 @@ services:
       - db
     volumes: 
       - ./OmCustomer/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
 
   omonboard:
@@ -153,7 +153,7 @@ services:
       - db
     volumes: 
       - ./OmOnboard/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
 
   omcarepackapi:
@@ -173,7 +173,7 @@ services:
       - db
     volumes:
       - ./OmCarePackApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   ominventoryapi:
     build:
@@ -191,7 +191,7 @@ services:
       - db
     volumes:
       - ./OmInventoryApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   omproductapi:
     build:
@@ -208,7 +208,7 @@ services:
       - db
     volumes:
       - ./OmProductApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   omcustomerapi:
     build: 
@@ -225,7 +225,7 @@ services:
       - db
     volumes:
       - ./OmCustomerApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   omemailapi:
     build: 
@@ -242,7 +242,7 @@ services:
       - db
     volumes:
       - ./OmEmailApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   omnotificationapi:
     build: 
@@ -259,7 +259,7 @@ services:
       - db
     volumes:
       - ./OmNotificationApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   omwhatsappwebhook:
     build: 
@@ -276,7 +276,7 @@ services:
       - db
     volumes:
       - ./OmWhatsappWebhook/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   omwhatsappapi:
     build: 
@@ -293,7 +293,7 @@ services:
       - db
     volumes:
       - ./OmWhatsappApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem
 
   omserviceapi:
     build: 
@@ -310,4 +310,4 @@ services:
       - db
     volumes:
       - ./OmServiceApi/appsettings.json:/app/appsettings.json
- #     - ./Keys/public-key.pem:/app/public-key.pem
+      - ./Keys/public-key.pem:/app/public-key.pem

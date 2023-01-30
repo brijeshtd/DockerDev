@@ -42,11 +42,18 @@ do
             ssl_certificate     /etc/letsencrypt/live/${DOMAIN_LIST[$1]}/fullchain.pem;
             ssl_certificate_key /etc/letsencrypt/live/${DOMAIN_LIST[$1]}/privkey.pem;
             server_name ${DOMAIN_LIST[$"$i"]};
+            
+        location /images/ {
+            sendfile           on;
+            sendfile_max_chunk 1m;
+            root /var/www/static_volume;
+
+            }
 
         location / {
                 proxy_pass http://${SERVER_LIST[$"$i"]}:5000;
             }
-            location ~ /.well-known/acme-challenge/ {
+        location ~ /.well-known/acme-challenge/ {
                 root /var/www/certbot;
             }
         }
