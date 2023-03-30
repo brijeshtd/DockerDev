@@ -1,5 +1,5 @@
-DOMAIN_LIST=("tstadmin.onlinemagic.in" "tstportal.onlinemagic.in" "tstuser.onlinemagic.in" "tstonboarding.onlinemagic.in")
-SERVER_LIST=("omadmin" "omcompany" "omcustomer" "omonboard")
+DOMAIN_LIST=("tstadmin.onlinemagic.in" "tstportal.onlinemagic.in" "tstuser.onlinemagic.in" "tstonboarding.onlinemagic.in" "tstservice.onlinemagic.in")
+SERVER_LIST=("omadmin" "omcompany" "omcustomer" "omonboard" "omservice")
 echo "
 worker_processes 1;
 events {
