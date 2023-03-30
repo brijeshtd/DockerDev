@@ -11,14 +11,14 @@ services:
       - PGDATA=/var/lib/postgresql/data
     ports:
       - '5432:5432'
-    volumes: 
+    volumes:
       - /pgdata/:/var/lib/postgresql/data
-      # - ./db-seed-files/:/etc/docker-entrypoint-initdb.d      
+      # - ./db-seed-files/:/etc/docker-entrypoint-initdb.d
 
 
   reverseproxy:
     build: ./nginx/
-    container_name: reverseproxy 
+    container_name: reverseproxy
     ports:
       - "80:80"
       - "443:443"
@@ -38,7 +38,7 @@ services:
     command: certonly --webroot -w /var/www/certbot --force-renewal --email "${CERT_MAIL}"  ${DOMAIN}  --agree-tos
 
   # reverseproxy:
-      
+
   #     build: ./nginx/
   #     container_name: reverseproxy
   #     ports:
@@ -49,40 +49,52 @@ services:
   #       - /etc/nginx/ssl/private.key:/etc/nginx/ssl/private.key
   #       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
   identityone:
-    build: 
+    build:
       context: ./IdentityOne/
     container_name: identityone
-    command: ["dotnet","identityone.dll"]      
+    command: ["dotnet","identityone.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=identityone.dll      
+      - RUNNER=identityone.dll
       # - "ConnectionStrings:EfConn=\"Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;\""
-      # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""      
-       
+      # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""
+
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./IdentityOne/appsettings.json:/app/appsettings.json
       - ./Keys/private-key.pem:/app/private-key.pem
       - ./Keys/public-key.pem:/app/public-key.pem
+
+  rqueue:
+
+    image: rabbitmq:3.11-management
+    container_name: rqueue
+
+    environment:
+      - RABBITMQ_DEFAULT_USER=magicQ
+      - RABBITMQ_DEFAULT_PASS=onlineQfortesting2022
+    ports:
+      - 15672:15672
+      - 5672:5672
 
   omadmin:
     build:
       context: ./OmAdmin/
     container_name: omadmin
-    command: ["dotnet","OmAdmin.dll"]      
+    command: ["dotnet","OmAdmin.dll"]
     depends_on:
       - db
     # env_file:
     #   - ./OmAdmin/.env
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmAdmin.dll      
+      - RUNNER=OmAdmin.dll
       # - "ConnectionStrings:EfConn=\"Server=ompgsqlone;Port=5432;Database=identityone;User Id=onlinemagic;Password=onlinemagic;\""
       # - "DapperConn:PgSql=\"User ID=onlinemagic;Password=onlinemagic;Host=ompgsqlone;Port=5432;Database=identityone;Pooling=true;Timeout=300;CommandTimeout=300;KeepAlive=300\""
       # - "ApiUrls:Identity=http://identityone:5000"
       # - "ApiUrls:Admin=http://omadminapi:5000"
-    volumes: 
+    volumes:
       - ./OmAdmin/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
@@ -91,13 +103,13 @@ services:
     build:
       context: ./OmAdminApi/
     container_name: omadminapi
-    command: ["dotnet","OmAdminApi.dll"]      
+    command: ["dotnet","OmAdminApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmAdminApi.dll      
+      - RUNNER=OmAdminApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmAdminApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
@@ -106,13 +118,13 @@ services:
     build:
       context: ./OmCompany/
     container_name: omcompany
-    command: ["dotnet","OmCompany.dll"]       
+    command: ["dotnet","OmCompany.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmCompany.dll      
+      - RUNNER=OmCompany.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmCompany/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
@@ -121,13 +133,13 @@ services:
     build:
       context: ./OmCustomer/
     container_name: omcustomer
-    command: ["dotnet","OmCustomer.dll"]    
+    command: ["dotnet","OmCustomer.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmCustomer.dll      
+      - RUNNER=OmCustomer.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmCustomer/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
@@ -141,7 +153,7 @@ services:
       - RUNNER=OmOnboard.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmOnboard/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
@@ -156,7 +168,7 @@ services:
       - RUNNER=OmCarePackApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmCarePackApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
@@ -169,126 +181,124 @@ services:
       - RUNNER=WhatsAppOne.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./WhatsAppOne/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
   ominventoryapi:
     build: ./OmInventoryApi/
     container_name: ominventoryapi
-    command: ["dotnet","OmInventoryApi.dll"]    
+    command: ["dotnet","OmInventoryApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmInventoryApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmInventoryApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
   omproductapi:
     build: ./OmProductApi/
     container_name: omproductapi
-    command: ["dotnet","OmProductApi.dll"]  
+    command: ["dotnet","OmProductApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmProductApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmProductApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
   omcustomerapi:
     build: ./OmCustomerApi/
     container_name: omcustomerapi
-    command: ["dotnet","OmCustomerApi.dll"]      
+    command: ["dotnet","OmCustomerApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmCustomerApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmCustomerApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
   omemailapi:
     build: ./OmEmailApi/
     container_name: omemailapi
-    command: ["dotnet","OmEmailApi.dll"]      
+    command: ["dotnet","OmEmailApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmEmailApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmEmailApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
   omnotificationapi:
     build: ./OmNotificationApi/
     container_name: omnotificationapi
-    command: ["dotnet","OmNotificationApi.dll"]  
+    command: ["dotnet","OmNotificationApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmNotificationApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmNotificationApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
   omwhatsappwebhook:
     build: ./OmWhatsappWebhook/
     container_name: omwhatsappwebhook
-    command: ["dotnet","OmWhatsappWebhook.dll"]  
+    command: ["dotnet","OmWhatsappWebhook.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmWhatsappWebhook.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmWhatsappWebhook/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
   omwhatsappapi:
     build: ./OmWhatsappApi/
     container_name: omwhatsappapi
-    command: ["dotnet","OmWhatsappApi.dll"]      
+    command: ["dotnet","OmWhatsappApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmWhatsappApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmWhatsappApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
 
   omserviceapi:
     build: ./OmServiceApi/
     container_name: omserviceapi
-    command: ["dotnet","OmServiceApi.dll"]      
+    command: ["dotnet","OmServiceApi.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - RUNNER=OmServiceApi.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmServiceApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
-  
+
   omservice:
-    build:
-      context: ./OmService/
+    build: ./OmService/
     container_name: omservice
-    command: ["dotnet","OmService.dll"]    
+    command: ["dotnet","OmService.dll"]
     environment:
       - ASPNETCORE_URLS=http://+:5000
-      - RUNNER=OmService.dll      
+      - RUNNER=OmService.dll
     depends_on:
       - db
-    volumes: 
+    volumes:
       - ./OmService/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
       - ./static_volume:/app/wwwroot/static
-  
