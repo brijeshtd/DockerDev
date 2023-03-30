@@ -277,3 +277,18 @@ services:
       - ./OmServiceApi/appsettings.json:/app/appsettings.json
       - ./Keys/public-key.pem:/app/public-key.pem
   
+  omservice:
+    build:
+      context: ./OmService/
+    container_name: omservice
+    command: ["dotnet","OmService.dll"]    
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - RUNNER=OmService.dll      
+    depends_on:
+      - db
+    volumes: 
+      - ./OmService/appsettings.json:/app/appsettings.json
+      - ./Keys/public-key.pem:/app/public-key.pem
+      - ./static_volume:/app/wwwroot/static
+  
